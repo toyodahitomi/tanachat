@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>chatApp</title>
+  <link rel="stylesheet" href="css/sample.css">
+  <style>
+    #output li {
+      background: #ccc;
+    }
+  </style>
+
+</head>
+
+<body>
+  <link href="https://fonts.googleapis.com/earlyaccess/nicomoji.css" rel="stylesheet">
+  <div class="title_box">
+    <h1>たなべさんとおしゃべり</h1>
+  </div>
+  <!-- 入力場所を作成しよう -->
+
+  <div class="form_box">
+    <form>
+      <fieldset>
+        <p>
+          <legend>チャット入力画面</legend>
+        </p>
+        <div class="your_name">
+          名前: <input type=" text" id="name">
+        </div>
+        <div class="your_text">
+          たなべさんに<br>
+          言いたいこと: <input type="text" id="text" size="23">
+        </div>
+
+        <div class="button_box">
+          <button type="button" id="send1">send</button>
+        </div>
+        <p> たなべさんのお返事</p>
+        <div id="tanabe_text">
+          <p>ここに出るよ</p>
+        </div>
+
+      </fieldset>
+    </form>
+  </div>
+
+
+
+  <!-- データ出力場所 -->
+
+  <ul id="output"></ul>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script>
+    // 日時をいい感じの形式にする関数
+    function convertTimestampToDatetime(timestamp) {
+      const _d = timestamp ? new Date(timestamp * 1000) : new Date();
+      const Y = _d.getFullYear();
+      const m = (_d.getMonth() + 1).toString().padStart(2, '0');
+      const d = _d.getDate().toString().padStart(2, '0');
+      const H = _d.getHours().toString().padStart(2, '0');
+      const i = _d.getMinutes().toString().padStart(2, '0');
+      const s = _d.getSeconds().toString().padStart(2, '0');
+      return `${Y}/${m}/${d} ${H}:${i}:${s}`;
+    }
+  </script>
+
+
+  <!-- 以下にfirebaseのコードを貼り付けよう -->
+
+  <!--  ブラウザでモジュールを動作させますよ～   -->
+  <script type="module">
+
+    //１．firebaseとやり取りできるようになるコードを貼り付けた
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+
+
+    import {
+      //２-1．いろいろな機能が使えるように、最初に読み込んでおくのだぞ
+      getFirestore,
+      collection,
+      addDoc,
+      //2-2. ここでサーバータイムスタンプを読み込んでるから、下の、ユーザーが入力したデータをdbから読み込むときに人間に読みやすいように読み込んで来られるってわけ
+      serverTimestamp,
+      //2-3. データを取ってきますよーの処理、データが追加されたり、上書きされたり、削除されたりしたタイミングに強いonsnapshotが取ってきます
+      onSnapshot,
+      query,
+      orderBy,
+      //現在9.5.0であるが、以前の9.2.0が添付してあったので、その部分を↑のFirestoreにある最新コードのバージョンに合わせる
+    } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-firestore.js";
+
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBHq3hMdQaMxJkVvK6RCTAEi-6Z0RQif2g",
+      authDomain: "chat-44874.firebaseapp.com",
+      projectId: "chat-44874",
+      storageBucket: "chat-44874.appspot.com",
+      messagingSenderId: "481419352739",
+      appId: "1:481419352739:web:26f0dc15fdec70383d3d16"
+    };
+
+    //Firebaseとつながりますよー
+    const app = initializeApp(firebaseConfig);
+    //  追加、Firebaseとやりとりするデータベース（db）とつながりますよー、のコード
+    const db = getFirestore(app);
+    //送信ボタン「send」をクリックしたら、なんかしますよー、のコード
+    $("#send1").on("click", function () {
+      //ユーザーが入力したデータを取ってくる、idを使って.val(),を使って読み込むやつ。オブジェクトで1個にまとめるやつね。
+      const data = {
+        //ネームとテキストは今までと同じ手口。idを指定してドットバル（）カンマ。
+        name: $("#name").val(),
+        text: $("#text").val(),
+        //グーグル先生独自のタイムスタンプをどうやって表示するかというと下の「サーバータイムスタンプ」を指定してあげると読み込みができるようになるよ。
+        time: serverTimestamp(),
+
+
+      };
+      //送信クリックをしたら下のランダムなお返事が「ここに出るよ」にひょうじされるようにしたい
+      $("#send1").on("click", function () {
+
+        //ランダムに作ったたなべさんのお言葉が「お返事」の部分に入る
+        const text01 = ["まあねぇ～", "うふふ", "ばかーーー！", "すみません", "このスイーツ超美味しいんだけど！", "亀梨君に会いたーい！"];
+        const randomtext = Math.floor(Math.random() * text01.length);
+        const tanabe_text = text01[randomtext];
+        //console.log(tanabe_text);
+        $("#tanabe_text").text(),
+
+
+
+
+
+          //実際データを取ってくるのは下の一行で完了。コレクション、（）、中にカンマ、左、右。コレクションに保存します、連携しているdbにします、つながっている「チャット」というところに入れたいです。何を入れますか？上で作ったdataの内容です。
+          addDoc(collection(db, "chat"), data);
+        //テキストを表示したら、かっこの中を空にしてね。
+        $("#text").val("");
+
+
+      });
+
+      const q = query(collection(db, "chat"), orderBy("time", "desc"));
+      // データ取得処理
+      onSnapshot(q, (querySnapshot) => {
+        //下のコンソールログで0番目のデータをコンソールに出せる、ドットデータ（）で行けるようにグーグル先生が作ってくれた   
+        //console.log(querySnapshot.docs[0].data());
+        //下のコンソールログで0番目のidをコンソールに出せる、オブジェクトなので.idでOK
+        //console.log(querySnapshot.docs[0].id);
+        //});
+        //とはいえ、1つ1つ上の処理をするのはきついので、下にいい感じにデータを取ってきてくれる配列と繰り返し処理有
+        //2-1 空の配列を用意する
+        const dataArray = [];
+        //2-2 querySnapshot.docsという配列に対してforEachという繰り返し処理を行う。forでもOK。
+        querySnapshot.docs.forEach(function (doc) {
+          //それぞれ1個ずつ取り出してきたところから、idとdataがまとまったひとつのかたまりを呼び出します
+
+          const data = {
+            id: doc.id,
+            data: doc.data(),
+          };
+          //よびだしたかたまりを最初の空の配列にどんどん入れていきます
+          dataArray.push(data);
+
+        });
+
+        console.log(dataArray);
+
+        const tagArray = [];
+        dataArray.forEach(function (data) {
+          tagArray.push(`
+     <li id="${data.id}">
+        <p>${data.data.name}  ${convertTimestampToDatetime(data.data.time.seconds)}</p>
+        <p>${data.data.text} </p>
+      </li>
+       `);
+        });
+
+        $("#output").html(tagArray);
+
+      });
+    });
+
+  </script>
+
+</body>
+
+</html>
