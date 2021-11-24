@@ -29,7 +29,7 @@
           <legend>チャット入力画面</legend>
         </p>
         <div class="your_name">
-          名前: <input type=" text" id="name">
+          名前: <input type=" text" id="name" size="23">
         </div>
         <div class="your_text">
           たなべさんに<br>
@@ -39,8 +39,15 @@
         <div class="button_box">
           <button type="button" id="send1">send</button>
         </div>
-        <p> たなべさんのお返事</p>
-        <div id="tanabe_text">
+
+        <div class="tanabe_answer_space">
+          <p> たなべさんのお返事</p>
+        </div>
+
+        <div id="tanabe_text" style="
+        display: flex;
+        justify-content: center;
+        ">
           <p>ここに出るよ</p>
         </div>
 
@@ -122,11 +129,11 @@
       $("#send1").on("click", function () {
 
         //ランダムに作ったたなべさんのお言葉が「お返事」の部分に入る
-        const text01 = ["まあねぇ～", "うふふ", "ばかーーー！", "すみません", "このスイーツ超美味しいんだけど！", "亀梨君に会いたーい！"];
+        const text01 = ["まあねぇ～", "うふふ", "ばかーーー！", "すみません・・・", "このスイーツ超美味しいんだけど！", "亀梨君に会いたーい！"];
         const randomtext = Math.floor(Math.random() * text01.length);
         const tanabe_text = text01[randomtext];
         //console.log(tanabe_text);
-        $("#tanabe_text").text(),
+        $("#tanabe_text").text(tanabe_text),
 
 
 

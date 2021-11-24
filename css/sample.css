@@ -46,6 +46,7 @@ h1{
 .your_name{
     font-size: 12px;
     font-weight: bold;
+    margin-left: 48px;
 }
 .your_text{
      font-size: 12px;
@@ -105,13 +106,20 @@ p{
     width: 81%;
     height:30px;
     margin: 20px;
+
 }
+
+.tanabe_answer_space p{
+    background-color:pink;
+}
+
+
 ul{
     padding: 0;
     border-top: 1px solid #000000;
     display:table;  /* 定義 */
     table-layout: fixed;
-    width:60%;
+    width:100%;
     font-size: 15px;
 }
 li{
@@ -136,4 +144,19 @@ li:hover{
 
 .answer p{
     font-size: 20px;
+}
+
+.tanabe_text p{
+    font-size: 18px;
+}
+.tanabe_text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tanabe_answer_space{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
