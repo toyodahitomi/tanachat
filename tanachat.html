@@ -179,8 +179,62 @@
 
         $("#output").html(tagArray);
 
-      });
-    });
+        <script type="module">
+  // Import the functions you need from the SDKs you need
+          import {initializeApp} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+          // TODO: Add SDKs for Firebase products that you want to use
+          // https://firebase.google.com/docs/web/setup#available-libraries
+
+          // Your web app's Firebase configuration
+          const firebaseConfig = {
+          apiKey: "AIzaSyAi4e0sR37T1UKOI-4wTe89jxqtCjgohZY",
+          authDomain: "tanabesan-answer.firebaseapp.com",
+          projectId: "tanabesan-answer",
+          storageBucket: "tanabesan-answer.appspot.com",
+          messagingSenderId: "790938728196",
+          appId: "1:790938728196:web:5e11da3524ef7d7541c251"
+      };
+
+          // Initialize Firebase
+          const app = initializeApp(firebaseConfig);
+
+          import {initializeApp} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+
+          // 🔽 追加 / `9.2.0`の部分を↑のFirestoreから貼り付けたコードのバージョンに合わせる
+          import {
+            getFirestore,
+            collection,
+            addDoc,
+            serverTimestamp,
+} from "https://www.gstatic.com/firebasejs/9.2.0/firebase-firestore.js";
+
+          const firebaseConfig = {
+            // 省略
+          };
+
+          const app = initializeApp(firebaseConfig);
+
+          // 🔽 追加
+          const db = getFirestore(app);
+  </script>
+
+
+
+
+
+
+
+
+
+
+  //const washingtonRef = doc(db, "コンソール名", "ドキュメント名")で特定のドキュメントに情報を追加したり、更新できると思います！ 0
+
+
+
+
+
+  });
+  });
 
   </script>
 
