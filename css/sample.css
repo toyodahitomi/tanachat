@@ -97,7 +97,10 @@ footer{
     height: 50%;
 }
 
-
+.tanabesan_answer_area{
+    font-size: 12px;
+    font-weight: bold;
+}
 
 p{
     font-size:20px;
@@ -105,12 +108,8 @@ p{
     border-bottom:1px solid #fff;
     width: 81%;
     height:30px;
-    margin: 20px;
+    margin: 7px;
 
-}
-
-.tanabe_answer_space p{
-    background-color:pink;
 }
 
 

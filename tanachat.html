@@ -35,20 +35,13 @@
           たなべさんに<br>
           言いたいこと: <input type="text" id="text" size="23">
         </div>
-
         <div class="button_box">
           <button type="button" id="send1">send</button>
         </div>
 
-        <div class="tanabe_answer_space">
-          <p> たなべさんのお返事</p>
-        </div>
-
-        <div id="tanabe_text" style="
-        display: flex;
-        justify-content: center;
-        ">
-          <p>ここに出るよ</p>
+        <div class="tanabesan_answer_area">
+          たなべさんの<br>
+          お返事: <input type=" text" id="tanabesan_answer1" size="23">
         </div>
 
       </fieldset>
@@ -120,27 +113,28 @@
         //ネームとテキストは今までと同じ手口。idを指定してドットバル（）カンマ。
         name: $("#name").val(),
         text: $("#text").val(),
+
         //グーグル先生独自のタイムスタンプをどうやって表示するかというと下の「サーバータイムスタンプ」を指定してあげると読み込みができるようになるよ。
         time: serverTimestamp(),
 
 
       };
-      //送信クリックをしたら下のランダムなお返事が「ここに出るよ」にひょうじされるようにしたい
+      //送信クリックをしたら下のランダムなお返事が表示欄に出るようにしたい
       $("#send1").on("click", function () {
 
-        //ランダムに作ったたなべさんのお言葉が「お返事」の部分に入る
+        //たなべさんの返事をランダムに作る
         const text01 = ["まあねぇ～", "うふふ", "ばかーーー！", "すみません・・・", "このスイーツ超美味しいんだけど！", "亀梨君に会いたーい！"];
         const randomtext = Math.floor(Math.random() * text01.length);
         const tanabe_text = text01[randomtext];
-        //console.log(tanabe_text);
-        $("#tanabe_text").text(tanabe_text),
+        console.log(tanabe_text);
+        //$("#tanabesan_answer1").text(tanabe_text),
 
 
 
 
 
-          //実際データを取ってくるのは下の一行で完了。コレクション、（）、中にカンマ、左、右。コレクションに保存します、連携しているdbにします、つながっている「チャット」というところに入れたいです。何を入れますか？上で作ったdataの内容です。
-          addDoc(collection(db, "chat"), data);
+        //実際データを取ってくるのは下の一行で完了。コレクション、（）、中にカンマ、左、右。コレクションに保存します、連携しているdbにします、つながっている「チャット」というところに入れたいです。何を入れますか？上で作ったdataの内容です。
+        addDoc(collection(db, "chat"), data);
         //テキストを表示したら、かっこの中を空にしてね。
         $("#text").val("");
 
